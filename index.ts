@@ -7,7 +7,7 @@ import { format } from "node:util";
 import * as cheerio from "cheerio";
 import { Document, Text, CDATA, Comment } from "domhandler";
 
-export type ComponentsOptions = {
+export type ComponentTags = {
   button: "button";
   row: "row";
   columns: "columns";
@@ -26,7 +26,7 @@ export type ComponentsOptions = {
 export type InkyOptions = {
   columnCount: number;
   cheerio: object;
-  components: Partial<ComponentsOptions>;
+  components: Partial<ComponentTags>;
 };
 
 const ignoredAttributes = [
