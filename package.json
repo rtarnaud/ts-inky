@@ -1,9 +1,14 @@
 {
   "name": "@rtarnaud/ts-inky",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A modern Inky (https://get.foundation/emails) update in TypeScript",
   "keywords": [
-    "Inky", "email", "template", "parser", "foundation", "typescript"
+    "Inky",
+    "email",
+    "template",
+    "parser",
+    "foundation",
+    "typescript"
   ],
   "license": "CC0-1.0",
   "repository": {
@@ -35,6 +40,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "cheerio": "^1.1.2"
+    "cheerio": "^1.1.2",
+    "domhandler": "^5.0.3"
   }
 }
