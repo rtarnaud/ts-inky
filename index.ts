@@ -5,12 +5,28 @@ import assert from "node:assert";
 import { format } from "node:util";
 
 import * as cheerio from "cheerio";
-import { Document, Text, CDATA, Comment } from 'domhandler';
+import { Document, Text, CDATA, Comment } from "domhandler";
+
+export type ComponentsOptions = {
+  button: "button";
+  row: "row";
+  columns: "columns";
+  container: "container";
+  callout: "callout";
+  inky: "inky";
+  blockGrid: "block-grid";
+  menu: "menu";
+  menuItem: "item";
+  center: "center";
+  spacer: "spacer";
+  wrapper: "wrapper";
+  hLine: "h-line";
+};
 
 export type InkyOptions = {
   columnCount: number;
   cheerio: object;
-  components: Record<string, string>;
+  components: Partial<ComponentsOptions>;
 };
 
 const ignoredAttributes = [
@@ -258,8 +274,8 @@ export default class Inky {
     );
 
     const node = element[0];
-    if (!('name' in node)) {
-      throw new Error('Element must have a name property');
+    if (!("name" in node)) {
+      throw new Error("Element must have a name property");
     }
 
     switch (node.name) {

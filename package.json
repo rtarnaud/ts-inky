@@ -1,6 +1,6 @@
 {
   "name": "@rtarnaud/ts-inky",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A modern Inky (https://get.foundation/emails) update in TypeScript",
   "keywords": [
     "Inky",
