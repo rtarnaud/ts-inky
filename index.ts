@@ -5,7 +5,7 @@ import assert from "node:assert";
 import { format } from "node:util";
 
 import * as cheerio from "cheerio";
-import { Document, Text, Comment } from 'domhandler';
+import { Document, Text } from 'domhandler';
 
 export type InkyOptions = {
   columnCount: number;
@@ -248,10 +248,6 @@ export default class Inky {
       "Element must not be a Document",
     );
     assert.ok(!(element[0] instanceof Text), "Element must not be a Text node");
-    assert.ok(
-      !(element[0] instanceof Comment),
-      "Element must not be a Comment node",
-    );
 
     const node = element[0];
     if (!('name' in node)) {
