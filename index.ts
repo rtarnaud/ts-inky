@@ -5,7 +5,7 @@ import assert from "node:assert";
 import { format } from "node:util";
 
 import * as cheerio from "cheerio";
-import { Document, CDATA, Text, Comment } from "domhandler";
+import { Document, Text, Comment } from 'domhandler';
 
 export type InkyOptions = {
   columnCount: number;
@@ -247,17 +247,18 @@ export default class Inky {
       !(element[0] instanceof Document),
       "Element must not be a Document",
     );
-    assert.ok(
-      !(element[0] instanceof CDATA),
-      "Element must not be a CDATA node",
-    );
     assert.ok(!(element[0] instanceof Text), "Element must not be a Text node");
     assert.ok(
       !(element[0] instanceof Comment),
       "Element must not be a Comment node",
     );
 
-    switch (element[0].name) {
+    const node = element[0];
+    if (!('name' in node)) {
+      throw new Error('Element must have a name property');
+    }
+
+    switch (node.name) {
       // <hr>
       case this._components.hLine: {
         let classes = ["h-line"];
