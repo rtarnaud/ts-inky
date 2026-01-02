@@ -6,6 +6,14 @@
     "Inky", "email", "template", "parser", "foundation", "typescript"
   ],
   "license": "CC0-1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rtarnaud/ts-inky.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rtarnaud/ts-inky/issues"
+  },
+  "homepage": "https://github.com/rtarnaud/ts-inky#readme",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
