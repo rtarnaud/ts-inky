@@ -1,10 +1,10 @@
 import type { Cheerio, CheerioOptions, CheerioAPI } from "cheerio";
 import type { AnyNode } from "domhandler";
 
-import assert from "node:assert";
+import { ok } from "node:assert";
 import { format } from "node:util";
 
-import * as cheerio from "cheerio";
+import { load } from "cheerio";
 import { Document, Text, CDATA, Comment } from "domhandler";
 
 export type ComponentTags = {
@@ -21,11 +21,11 @@ export type ComponentTags = {
   spacer: "spacer";
   wrapper: "wrapper";
   hLine: "h-line";
-};
+} & Record<string, string>;
 
 export type InkyOptions = {
   columnCount: number;
-  cheerio: object;
+  cheerio: CheerioOptions;
   components: Partial<ComponentTags>;
 };
 
@@ -75,8 +75,6 @@ export default class Inky {
     // Cheerio options
     this._cheerioOptions = Object.assign({}, options.cheerio || {});
 
-    // this._cheerioOptions.xml = { decodeEntities: false };
-
     // HTML tags for custom components
     this._components = Object.assign(
       {
@@ -94,7 +92,12 @@ export default class Inky {
         wrapper: "wrapper",
         hLine: "h-line",
       },
-      options.components || {},
+      // Filter out undefined values from options.components
+      Object.fromEntries(
+        Object.entries(options.components || {}).filter(
+          ([_, v]) => v !== undefined,
+        ),
+      ) as Record<string, string>,
     );
   }
 
@@ -113,7 +116,7 @@ export default class Inky {
     // This prevents cheerio from treating them as container elements
     text = this._normalizeVoidElements(text);
 
-    const $ = cheerio.load(text, this._cheerioOptions);
+    const $ = load(text, this._cheerioOptions);
     const tags = Object.values(this._components)
       .map((tag) => {
         if (tag == "center") {
@@ -259,19 +262,10 @@ export default class Inky {
     let inner = element.html();
     const attrs = getAttrs(element, $);
 
-    assert.ok(
-      !(element[0] instanceof Document),
-      "Element must not be a Document",
-    );
-    assert.ok(
-      !(element[0] instanceof CDATA),
-      "Element must not be a CDATA node",
-    );
-    assert.ok(!(element[0] instanceof Text), "Element must not be a Text node");
-    assert.ok(
-      !(element[0] instanceof Comment),
-      "Element must not be a Comment node",
-    );
+    ok(!(element[0] instanceof Document), "Element must not be a Document");
+    ok(!(element[0] instanceof CDATA), "Element must not be a CDATA node");
+    ok(!(element[0] instanceof Text), "Element must not be a Text node");
+    ok(!(element[0] instanceof Comment), "Element must not be a Comment node");
 
     const node = element[0];
     if (!("name" in node)) {
